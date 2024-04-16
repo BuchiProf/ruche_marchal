@@ -34,9 +34,9 @@ void setup()
 /*
 //Décommenter pour modifier
   clock.stopClock();
-  clock.fillByYMD(2024,3,22);//Jan 19,2013
-  clock.fillByHMS(15,47,00);//15:28 30"
-  clock.fillDayOfWeek(FRI);//Saturday
+  clock.fillByYMD(2024,4,24);
+  clock.fillByHMS(15,36,00);
+  clock.fillDayOfWeek(TUE);
   clock.setTime();//write time to the RTC chip
   clock.startClock();
 
