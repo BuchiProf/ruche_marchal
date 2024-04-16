@@ -6,6 +6,7 @@
 // Emetteur RF95 433 MHz
 // Emission des données toutes les 5 minutes
 // version 1 du 16 avril 2024
+// ajouter un espace à la fin du String envoyé par radio car supprimé à l'envoi ???!!!
 
 //partie RTC
 #include <Wire.h>
@@ -37,6 +38,7 @@ Adafruit_INA219 ina219;
 
 ///////////////////////////////////////////////////
 void setup() {
+  delay(30000);
     Serial.begin(115200);
     clock.begin();
     
@@ -69,27 +71,22 @@ void loop() {
 clock.getTime();
 //mesure toutes les 5 minutes
 if ((clock.minute) % 5 == 0){
+    //////////////////////envoi date//////////////
+    String dateH = formaterDate();
+    envoiRF95(dateH);
     /////////////////////envoi dht 22/////////////
     String temp = lireTemp();
     envoiRF95(temp);
     String humi = lireHumi();
     envoiRF95(humi);
-
     ///////////////////envoi masse///////
     String masse = lireMasse();
     envoiRF95(masse);
-
-    //////////////////////envoi date//////////////
-    String dateH = formaterDate();
-    envoiRF95(dateH);
-
     ////////////////////////envoi U et I/////////////
     String tension = lireTension();
     String courant = lireCourant();
     envoiRF95(courant);
     envoiRF95(tension);
-    
-
     // attendre une minute pour éviter répétition d'envois durant ce délais
     delay(60000);
 }
@@ -103,30 +100,30 @@ delay(10000);
 String lireTemp(){
   float humi = dht.readHumidity();
   float temp = dht.readTemperature();
-  return "Temp:" + String(temp);
+  return "Temp:" + String(temp)+" ";
 }
 
 String lireHumi(){
   float humi = dht.readHumidity();
   float temp = dht.readTemperature();
-  return "Humi:" + String(humi);
+  return "Humi:" + String(humi)+" ";
 }
 
 String lireMasse(){
   float masse = scale.get_units(10);
-  return "Masse:" + String(masse);
+  return "Masse:" + String(masse) +"kg"+" ";
 }
 
 String lireTension(){
   float shuntvoltage = ina219.getShuntVoltage_mV();
   float busvoltage = ina219.getBusVoltage_V();
   float loadvoltage = busvoltage + (shuntvoltage / 1000);
-  return "U=" + String(loadvoltage)+"V";
+  return "U=" + String(loadvoltage)+"V"+" ";
 }
 
 String lireCourant(){
   float current_mA = ina219.getCurrent_mA();
-  return "I=" + String(current_mA) +"mA";
+  return "I=" + String(current_mA) +"mA" + " ";
 }
 
 String formaterDate(){
