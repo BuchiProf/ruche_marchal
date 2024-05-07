@@ -18,7 +18,10 @@
     #define ShowSerial Serial
 
     RH_RF95<SoftwareSerial> rf95(COMSerial);
-
+//openlogger
+#define PIN_OPENLOG_RXI_6  7
+#define PIN_OPENLOG_TX0_7  6
+SoftwareSerial OpenLog_7(PIN_OPENLOG_TX0_7, PIN_OPENLOG_RXI_6); // RX, TX -> inversion des broches
 
 
 int led = 13;
@@ -31,7 +34,9 @@ void setup() {
     pinMode(led, OUTPUT);
     lcd.begin(16, 2);
     lcd.print("demarrage");
-
+    // init openlogger
+    OpenLog_7.begin(9600);
+    OpenLog_7.println(String("redémarrage"));
     delay(1000);
 
     if (!rf95.init()) {
@@ -62,6 +67,8 @@ void loop() {
             lcd.setCursor(0, 0);
             lcd.print((char*)buf);
             delay(1000);
+            //ecriture sur SD des massages reçus
+            OpenLog_7.println(String((char*)buf));
 
             // Send a reply
             uint8_t data[] = "Bien reçu";
