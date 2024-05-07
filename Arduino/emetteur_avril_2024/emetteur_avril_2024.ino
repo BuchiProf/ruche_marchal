@@ -134,7 +134,7 @@ String formaterDate(){
   String hour = ajouteZero(clock.hour);
   String minute = ajouteZero(clock.minute);
   //une chaine de caractere au format "YYYY:MM:DD"
-  return String(clock.year+2000, DEC) + ":" + mois + ":" + jour+ " " + hour + ":" + minute +" ";
+  return String(clock.year+2000, DEC) + "-" + mois + "-" + jour+ " " + hour + ":" + minute +" ";
   }
 
 String ajouteZero(uint8_t val){
