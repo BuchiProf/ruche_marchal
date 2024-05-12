@@ -111,19 +111,19 @@ String lireHumi(){
 
 String lireMasse(){
   float masse = scale.get_units(10);
-  return "Masse:" + String(masse) +"kg"+" ";
+  return "Mass:" + String(masse) +" ";
 }
 
 String lireTension(){
   float shuntvoltage = ina219.getShuntVoltage_mV();
   float busvoltage = ina219.getBusVoltage_V();
   float loadvoltage = busvoltage + (shuntvoltage / 1000);
-  return "U=" + String(loadvoltage)+"V"+" ";
+  return "UenV=" + String(loadvoltage) +" ";
 }
 
 String lireCourant(){
   float current_mA = ina219.getCurrent_mA();
-  return "I=" + String(current_mA) +"mA" + " ";
+  return "I_mA=" + String(current_mA)  + " ";
 }
 
 String formaterDate(){
@@ -133,7 +133,7 @@ String formaterDate(){
   String jour = ajouteZero(clock.dayOfMonth);
   String hour = ajouteZero(clock.hour);
   String minute = ajouteZero(clock.minute);
-  //une chaine de caractere au format "YYYY:MM:DD"
+  //une chaine de caractere au format "YYYY-MM-DD HH:mm"
   return String(clock.year+2000, DEC) + "-" + mois + "-" + jour+ " " + hour + ":" + minute +" ";
   }
 
