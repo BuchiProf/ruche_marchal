@@ -69,8 +69,8 @@ void setup() {
 ///////////////LOOP BEGIN///////////////////////////
 void loop() {
 clock.getTime();
-//mesure toutes les 5 minutes
-if ((clock.minute) % 5 == 0){
+//mesure toutes les 15 minutes
+if ((clock.minute) % 15 == 0){
     //////////////////////envoi date//////////////
     String dateH = formaterDate();
     envoiRF95(dateH);
