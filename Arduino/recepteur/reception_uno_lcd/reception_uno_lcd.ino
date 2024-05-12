@@ -36,7 +36,8 @@ void setup() {
     lcd.print("demarrage");
     // init openlogger
     OpenLog_7.begin(9600);
-    OpenLog_7.println(String("redémarrage"));
+    //eviter erreur en utilisant println, on ajouter carriage return à la fin de print
+    OpenLog_7.print(String("redemarrage\r"));
     delay(1000);
 
     if (!rf95.init()) {
