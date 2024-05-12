@@ -111,7 +111,7 @@ String lireHumi(){
 
 String lireMasse(){
   float masse = scale.get_units(10);
-  return "Mass:" + String(masse) +" ";
+  return "M_kg:" + String(masse) +" ";
 }
 
 String lireTension(){
