@@ -1,11 +1,5 @@
-// rf95_server.pde
-// -*- mode: C++ -*-
-// Example sketch showing how to create a simple messageing server
-// with the RH_RF95 class. RH_RF95 class does not provide for addressing or
-// reliability, so you should only use RH_RF95  if you do not need the higher
-// level messaging abilities.
-// It is designed to work with the other example rf95_client
-// Tested with Anarduino MiniWirelessLoRa
+// Reception de donnee par lora grove 
+// mise en forme des données au format csv pour stockage sur openlog
 
 
 #include <Wire.h>
@@ -29,18 +23,18 @@ int led = 13;
 
 void setup() {
     ShowSerial.begin(115200);
-    ShowSerial.println("RF95 server test.");
+    ShowSerial.println("Com serie en 115200 bauds");
 
     pinMode(led, OUTPUT);
 
     // init openlogger
     OpenLog_7.begin(9600);
     //eviter erreur en utilisant println, on ajouter carriage return à la fin de print
-    OpenLog_7.print(String("redemarrage\r"));
+    OpenLog_7.print(String("demarrage openlog\r"));
     delay(1000);
 
     if (!rf95.init()) {
-        ShowSerial.println("init failed");
+        ShowSerial.println("initialisation radio echouee");
         while (1);
     }
     // Defaults after init are 434.0MHz, 13dBm, Bw = 125 kHz, Cr = 4/5, Sf = 128chips/symbol, CRC on
@@ -55,13 +49,15 @@ void setup() {
 
 void loop() {
     if (rf95.available()) {
-        // Should be a message for us now
+        // si un message arrive
         uint8_t buf[RH_RF95_MAX_MESSAGE_LEN];
         uint8_t len = sizeof(buf);
         if (rf95.recv(buf, &len)) {
             digitalWrite(led, HIGH);
             String message = String((char*)buf);
             char premiereLettre = message.charAt(0);
+            //une serie de données reçue est concaténée mais on recommence une nouvelle ligne après le message de la tension
+            //le dernier message d'une serie est normalement la tension en V
             if (premiereLettre=="U"){
               //on arrive à la mesure de tension et on enregistre en allant à la ligne
               String enregistrement = message + "\r";
@@ -82,7 +78,7 @@ void loop() {
 
             digitalWrite(led, LOW);
         } else {
-            ShowSerial.println("erreur réception");
+            ShowSerial.println("erreur reception");
         }
     }
 }
