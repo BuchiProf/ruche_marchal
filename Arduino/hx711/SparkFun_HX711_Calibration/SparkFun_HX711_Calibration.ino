@@ -35,8 +35,8 @@
 
 #include "HX711.h" //This library can be obtained here http://librarymanager/All#Avia_HX711
 
-#define LOADCELL_DOUT_PIN  6
-#define LOADCELL_SCK_PIN  7
+#define LOADCELL_DOUT_PIN  5
+#define LOADCELL_SCK_PIN  4
 
 HX711 scale;
 

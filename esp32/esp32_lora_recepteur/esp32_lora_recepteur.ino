@@ -47,6 +47,7 @@ void loop() {
     while (LoRa.available()) {
       String LoRaData = LoRa.readString();
       Serial.println(LoRaData);
+      /*
       //on divise la chaine de caractère pour en extraire des valeurs numérique et préparer le stockage en BDD
       if (LoRaData.substring(0,6)=="BME280"){
                   // Divisez les données reçues par ": "
@@ -74,6 +75,7 @@ void loop() {
                   Serial.print("la pression : ");
                   Serial.println(pression);
                 }
+                */
     }
 
     // print RSSI of packet
